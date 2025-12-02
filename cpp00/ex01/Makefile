@@ -7,7 +7,8 @@ BUILD = build
 RM = rm -rf
 
 SRCS = \
-	phonebook.cpp
+	main.cpp
+	# phonebook.cpp
 
 OBJS = $(SRCS:%.cpp=$(BUILD)/%.o)
 
