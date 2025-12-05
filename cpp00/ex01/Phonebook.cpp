@@ -2,6 +2,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
+#include <string>
 
 bool is_number(const std::string &s) {
 	if (s.empty()) {
@@ -52,21 +54,27 @@ std::string Phonebook::format_table_field(std::string field) {
 	}
 }
 
+std::string itoa(int value) {
+	std::ostringstream oss;
+	oss << value;
+	return oss.str();
+}
+
 void Phonebook::search_contact() {
-	std::printf("┏━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┓\n"
-				"┃  Index   ┃First Name┃Last Name ┃ Nickname ┃\n"
-				"┣━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━┫\n");
+	std::cout << "┏━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┓\n"
+				 "┃  Index   ┃First Name┃Last Name ┃ Nickname ┃\n"
+				 "┣━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━┫\n";
 
 	for (int i = 0; i <= current_max_index; ++i) {
-		std::printf("┃%10d", i);
+		std::cout << "┃" << format_table_field(itoa(i)).c_str();
 		std::cout << "│" << format_table_field(contacts[i].first_name).c_str();
 		std::cout << "│" << format_table_field(contacts[i].last_name).c_str();
 		std::cout << "│" << format_table_field(contacts[i].nickname).c_str() << "┃\n";
 		if (i < current_max_index) {
-			std::printf("┠──────────┼──────────┼──────────┼──────────┨\n");
+			std::cout << "┠──────────┼──────────┼──────────┼──────────┨\n";
 		}
 	}
-	std::printf("┗━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━┛\n");
+	std::cout << "┗━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━┛\n";
 
 	if (current_max_index < 0) {
 		std::cout << "No entries available.\n\n";
@@ -90,13 +98,11 @@ void Phonebook::search_contact() {
 		std::cout << "ERROR: Invalid Index.\n";
 	} else {
 		Contact *contact = &contacts[requested_index];
-		std::printf("First Name: %s\n"
-					"Last Name: %s\n"
-					"Nickname: %s\n"
-					"Phone Number: %s\n"
-					"Darkest Secret: %s\n",
-					contact->first_name.c_str(), contact->last_name.c_str(), contact->nickname.c_str(),
-					contact->phone_number.c_str(), contact->darkest_secret.c_str());
+		std::cout << "First Name: " << contact->first_name.c_str() << '\n';
+		std::cout << "Last Name: " << contact->last_name.c_str() << '\n';
+		std::cout << "Nickname: " << contact->nickname.c_str() << '\n';
+		std::cout << "Phone Number: " << contact->phone_number.c_str() << '\n';
+		std::cout << "Darkest Secret: " << contact->darkest_secret.c_str() << '\n';
 	}
 	std::cout << "\n";
 }
