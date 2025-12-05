@@ -14,6 +14,7 @@ class Phonebook {
 
   private:
 	std::string format_table_field(std::string field);
+	void request_field(const std::string &prompt, std::string &field, enum field_type type);
 };
 
 #endif

@@ -3,19 +3,41 @@
 #include <cstdlib>
 #include <iostream>
 
+bool is_number(const std::string &s) {
+	if (s.empty()) {
+		return false;
+	}
+
+	for (int i = 0; s[i] != '\0'; i++) {
+		if (!std::isdigit(static_cast<unsigned char>(s[i]))) {
+			return false;
+		}
+	}
+	return true;
+}
+
+void Phonebook::request_field(const std::string &prompt, std::string &field, enum field_type type) {
+	while (field.empty()) {
+		std::cout << prompt;
+		std::getline(std::cin, field);
+		if (field.empty()) {
+			std::cout << "Error: No fields can be left empty.\n";
+		} else if (type == NUMBER && !is_number(field)) {
+			std::cout << "Error: Not a valid phone number.\n";
+			field.clear();
+		}
+	}
+}
+
 void Phonebook::add_contact() {
-	std::cout << "\nNEW CONTACT\n";
-	std::cout << "First Name: ";
-	std::getline(std::cin, contacts[new_contact_index].first_name);
-	std::cout << "Last Name: ";
-	std::getline(std::cin, contacts[new_contact_index].last_name);
-	std::cout << "Nickname: ";
-	std::getline(std::cin, contacts[new_contact_index].nickname);
-	std::cout << "Phone Number: ";
-	std::getline(std::cin, contacts[new_contact_index].phone_number);
-	std::cout << "Darkest Secret: ";
-	std::getline(std::cin, contacts[new_contact_index].darkest_secret);
-	if (current_max_index < NUM_CONTACTS) {
+	Contact contact = Contact();
+	request_field("First Name: ", contact.first_name, TEXT);
+	request_field("Last Name: ", contact.last_name, TEXT);
+	request_field("Nickname: ", contact.nickname, TEXT);
+	request_field("Phone Number: ", contact.phone_number, NUMBER);
+	request_field("Darkest Secret: ", contact.darkest_secret, TEXT);
+	contacts[new_contact_index] = contact;
+	if (current_max_index < (NUM_CONTACTS - 1)) {
 		++current_max_index;
 	}
 	new_contact_index = (new_contact_index + 1) % NUM_CONTACTS;
@@ -46,11 +68,21 @@ void Phonebook::search_contact() {
 	}
 	std::printf("┗━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━┛\n");
 
+	if (current_max_index < 0) {
+		std::cout << "No entries available.\n\n";
+		return;
+	}
+
 	std::cout << "Contact Index: ";
 	int requested_index = 0;
 
 	std::string requested_index_string;
 	std::getline(std::cin, requested_index_string);
+
+	if (requested_index_string.empty()) {
+		std::cout << "ERROR: Invalid Index.\n";
+		return;
+	}
 
 	char *endptr = 0x00;
 	requested_index = std::strtol(requested_index_string.c_str(), &endptr, 10);
@@ -58,13 +90,12 @@ void Phonebook::search_contact() {
 		std::cout << "ERROR: Invalid Index.\n";
 	} else {
 		Contact *contact = &contacts[requested_index];
-		std::printf("Index: %d\n"
-					"First Name: %s\n"
+		std::printf("First Name: %s\n"
 					"Last Name: %s\n"
 					"Nickname: %s\n"
 					"Phone Number: %s\n"
 					"Darkest Secret: %s\n",
-					requested_index, contact->first_name.c_str(), contact->last_name.c_str(), contact->nickname.c_str(),
+					contact->first_name.c_str(), contact->last_name.c_str(), contact->nickname.c_str(),
 					contact->phone_number.c_str(), contact->darkest_secret.c_str());
 	}
 	std::cout << "\n";
