@@ -1,7 +1,6 @@
 #include <cctype>
 #include <iostream>
 
-// TODO: Use locale so Ñs are also uppered.
 int main(int argc, char **argv) {
 	if (argc == 1) {
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
