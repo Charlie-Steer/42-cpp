@@ -1,13 +1,16 @@
-NAME = phonebook
+NAME = zombies
 
 CXX = c++
-CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
+CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g
 
 BUILD = build
 RM = rm -rf
 
 SRCS = \
-	main.cpp
+	   main.cpp \
+	   Zombie.cpp \
+	   newZombie.cpp \
+	   randomChump.cpp
 
 OBJS = $(SRCS:%.cpp=$(BUILD)/%.o)
 
