@@ -21,7 +21,9 @@ bool is_number(const std::string &s) {
 void Phonebook::request_field(const std::string &prompt, std::string &field, enum field_type type) {
 	while (field.empty()) {
 		std::cout << prompt;
-		std::getline(std::cin, field);
+		if (!std::getline(std::cin, field)) {
+			exit(1);
+		}
 		if (field.empty()) {
 			std::cout << "Error: No fields can be left empty.\n";
 		} else if (type == NUMBER && !is_number(field)) {
@@ -85,7 +87,9 @@ void Phonebook::search_contact() {
 	int requested_index = 0;
 
 	std::string requested_index_string;
-	std::getline(std::cin, requested_index_string);
+	if (!std::getline(std::cin, requested_index_string)) {
+		exit(1);
+	}
 
 	if (requested_index_string.empty()) {
 		std::cout << "ERROR: Invalid Index.\n";
