@@ -31,6 +31,12 @@ void Phonebook::request_field(const std::string &prompt, std::string &field, enu
 			field.clear();
 		}
 	}
+
+	for (unsigned long i = 0; i < field.length(); i++) {
+		if (field[i] == '\t') {
+			field[i] = ' ';
+		}
+	}
 }
 
 void Phonebook::add_contact() {
