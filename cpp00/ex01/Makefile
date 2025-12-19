@@ -8,7 +8,8 @@ RM = rm -rf
 
 SRCS = \
 	main.cpp \
-	Phonebook.cpp
+	Phonebook.cpp \
+	Contact.cpp
 
 OBJS = $(SRCS:%.cpp=$(BUILD)/%.o)
 

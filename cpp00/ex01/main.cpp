@@ -4,7 +4,7 @@
 
 int main(void) {
 	Phonebook phonebook = Phonebook();
-	phonebook.current_max_index = -1;
+	//phonebook.current_max_index = -1;
 
 	std::cout << "CHARLIE'S PHONEBOOK\n\n";
 	std::cout << "Commands:\n";
@@ -14,7 +14,7 @@ int main(void) {
 
 	std::string user_prompt;
 	while (true) {
-		if (user_prompt == "EXIT" || !std::getline(std::cin, user_prompt)) {
+		if (!std::getline(std::cin, user_prompt) || user_prompt == "EXIT") {
 			std::cout << "Exiting Phonebook...\n";
 			return (0);
 		} else if (user_prompt == "ADD") {
@@ -22,7 +22,7 @@ int main(void) {
 		} else if (user_prompt == "SEARCH") {
 			phonebook.search_contact();
 		} else {
-			std::cout << "Command not found.\n\n";
+			std::cout << "Command not found.\n" << std::endl;
 		}
 	}
 }

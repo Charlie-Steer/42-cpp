@@ -5,6 +5,8 @@
 #include <sstream>
 #include <string>
 
+Phonebook::Phonebook() : current_max_index(-1), new_contact_index(0) {}
+
 bool is_number(const std::string &s) {
 	if (s.empty()) {
 		return false;
@@ -18,7 +20,9 @@ bool is_number(const std::string &s) {
 	return true;
 }
 
-void Phonebook::request_field(const std::string &prompt, std::string &field, enum field_type type) {
+std::string Phonebook::request_field(const std::string &prompt, enum field_type type) {
+	std::string field;
+
 	while (field.empty()) {
 		std::cout << prompt;
 		if (!std::getline(std::cin, field)) {
@@ -37,15 +41,17 @@ void Phonebook::request_field(const std::string &prompt, std::string &field, enu
 			field[i] = ' ';
 		}
 	}
+
+	return field;
 }
 
 void Phonebook::add_contact() {
 	Contact contact = Contact();
-	request_field("First Name: ", contact.first_name, TEXT);
-	request_field("Last Name: ", contact.last_name, TEXT);
-	request_field("Nickname: ", contact.nickname, TEXT);
-	request_field("Phone Number: ", contact.phone_number, NUMBER);
-	request_field("Darkest Secret: ", contact.darkest_secret, TEXT);
+	contact.setFirstName(request_field("First Name: ", TEXT));
+	contact.setLastName(request_field("Last Name: ", TEXT));
+	contact.setNickname(request_field("Nickname: ", TEXT));
+	contact.setPhoneNumber(request_field("Phone Number: ", NUMBER));
+	contact.setDarkestSecret(request_field("Darkest Secret: ", TEXT));
 	contacts[new_contact_index] = contact;
 	if (current_max_index < (NUM_CONTACTS - 1)) {
 		++current_max_index;
@@ -75,9 +81,9 @@ void Phonebook::search_contact() {
 
 	for (int i = 0; i <= current_max_index; ++i) {
 		std::cout << "┃" << format_table_field(itoa(i)).c_str();
-		std::cout << "│" << format_table_field(contacts[i].first_name).c_str();
-		std::cout << "│" << format_table_field(contacts[i].last_name).c_str();
-		std::cout << "│" << format_table_field(contacts[i].nickname).c_str() << "┃\n";
+		std::cout << "│" << format_table_field(contacts[i].getFirstName()).c_str();
+		std::cout << "│" << format_table_field(contacts[i].getLastName()).c_str();
+		std::cout << "│" << format_table_field(contacts[i].getNickname()).c_str() << "┃\n";
 		if (i < current_max_index) {
 			std::cout << "┠──────────┼──────────┼──────────┼──────────┨\n";
 		}
@@ -108,11 +114,11 @@ void Phonebook::search_contact() {
 		std::cout << "ERROR: Invalid Index.\n";
 	} else {
 		Contact *contact = &contacts[requested_index];
-		std::cout << "First Name: " << contact->first_name.c_str() << '\n';
-		std::cout << "Last Name: " << contact->last_name.c_str() << '\n';
-		std::cout << "Nickname: " << contact->nickname.c_str() << '\n';
-		std::cout << "Phone Number: " << contact->phone_number.c_str() << '\n';
-		std::cout << "Darkest Secret: " << contact->darkest_secret.c_str() << '\n';
+		std::cout << "First Name: " << contact->getFirstName().c_str() << '\n';
+		std::cout << "Last Name: " << contact->getLastName().c_str() << '\n';
+		std::cout << "Nickname: " << contact->getNickname().c_str() << '\n';
+		std::cout << "Phone Number: " << contact->getPhoneNumber().c_str() << '\n';
+		std::cout << "Darkest Secret: " << contact->getDarkestSecret().c_str() << '\n';
 	}
 	std::cout << "\n";
 }
