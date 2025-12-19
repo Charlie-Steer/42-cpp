@@ -4,6 +4,9 @@ phonebook
 zombies
 battle
 little_sed
+sedlike
+textfile
+*.replace
 
 # Prerequisites
 *.d

@@ -1,4 +1,4 @@
-NAME = little_sed
+NAME = sedlike
 
 CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g
