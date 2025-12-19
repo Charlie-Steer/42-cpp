@@ -7,8 +7,12 @@ void error(std::string message) {
 	std::cerr << "Error: " << message << "\n";
 }
 
+void warn(std::string message) {
+	std::cerr << "Warning: " << message << "\n";
+}
+
 void log(std::string message) {
-	std::cerr << message << "\n";
+	std::cout << message << "\n";
 }
 
 void log_format() {
@@ -41,6 +45,11 @@ int main(int argc, char *argv[]) {
 	buffer << input.rdbuf();
 	std::string input_string = buffer.str();
 
+	// std::cout << input_string.length() << std::endl;
+	if (input_string.length() == 0) {
+		warn("Input file is empty.");
+	}
+
 	std::string output_filename = std::string(argv[1]) + ".replace";
 	std::ofstream output(output_filename.c_str());
 
@@ -67,4 +76,6 @@ int main(int argc, char *argv[]) {
 
 	input.close();
 	output.close();
+
+	log("Replacement complete.");
 }
