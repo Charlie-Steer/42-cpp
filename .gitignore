@@ -2,6 +2,10 @@
 megaphone
 phonebook
 zombies
+battle
+sedlike
+*.replace
+harl
 
 # Prerequisites
 *.d
