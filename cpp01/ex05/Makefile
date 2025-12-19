@@ -1,4 +1,4 @@
-NAME = sedlike
+NAME = harl
 
 CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g
@@ -7,7 +7,8 @@ BUILD = build
 RM = rm -rf
 
 SRCS = \
-	   main.cpp
+	   main.cpp \
+	   Harl.cpp 
 
 OBJS = $(SRCS:%.cpp=$(BUILD)/%.o)
 

@@ -5,6 +5,7 @@ zombies
 battle
 sedlike
 *.replace
+harl
 
 # Prerequisites
 *.d
