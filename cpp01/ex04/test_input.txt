@@ -1,0 +1,9 @@
+In the beginning, the code was simple.
+The code worked, and the code was clean.
+
+Over time, the code grew more complex.
+Some parts of the code were rewritten.
+Other parts of the code remained untouched.
+
+Eventually, the code became hard to read.
+Yet the code was still powerful.
