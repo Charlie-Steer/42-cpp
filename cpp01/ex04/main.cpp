@@ -3,7 +3,7 @@
 #include <sstream>
 #include <string>
 
-void error(std::string message) {
+void error_message(std::string message) {
 	std::cerr << "Error: " << message << "\n";
 }
 
@@ -11,17 +11,17 @@ void warn(std::string message) {
 	std::cerr << "Warning: " << message << "\n";
 }
 
-void log(std::string message) {
+void log_message(std::string message) {
 	std::cout << message << "\n";
 }
 
 void log_format() {
-	log("Format: sedlike <filename> <s1> <s2>");
+	log_message("Format: sedlike <filename> <s1> <s2>");
 }
 
 int main(int argc, char *argv[]) {
 	if (argc != 4) {
-		error("Bad input arguments.");
+		error_message("Bad input arguments.");
 		log_format();
 		return (1);
 	}
@@ -30,14 +30,14 @@ int main(int argc, char *argv[]) {
 	std::string s2 = argv[3];
 
 	if (s1 == "") {
-		error("<s1> must not be empty.");
+		error_message("<s1> must not be empty.");
 		log_format();
 		return (1);
 	}
 
 	std::ifstream input(argv[1]);
 	if (!input.is_open()) {
-		error("Couldn't open input file.");
+		error_message("Couldn't open input file.");
 		return (1);
 	}
 
@@ -45,7 +45,6 @@ int main(int argc, char *argv[]) {
 	buffer << input.rdbuf();
 	std::string input_string = buffer.str();
 
-	// std::cout << input_string.length() << std::endl;
 	if (input_string.length() == 0) {
 		warn("Input file is empty.");
 	}
@@ -54,7 +53,7 @@ int main(int argc, char *argv[]) {
 	std::ofstream output(output_filename.c_str());
 
 	if (!output.is_open()) {
-		error("Couldn't create output file.");
+		error_message("Couldn't create output file.");
 		return (1);
 	}
 
@@ -77,5 +76,5 @@ int main(int argc, char *argv[]) {
 	input.close();
 	output.close();
 
-	log("Replacement complete.");
+	log_message("Replacement complete.");
 }
