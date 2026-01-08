@@ -15,11 +15,25 @@ class Fixed {
 	~Fixed();
 	int getRawBits(void) const;
 	void setRawBits(int const raw);
+
 	// ex01:
 	Fixed(const int decimal);
 	Fixed(const float floating);
 	int toInt(void) const;
 	float toFloat(void) const;
+
+	// ex02:
+	bool operator>(const Fixed &other) const;
+	bool operator<(const Fixed &other) const;
+	bool operator>=(const Fixed &other) const;
+	bool operator<=(const Fixed &other) const;
+	bool operator==(const Fixed &other) const;
+	bool operator!=(const Fixed &other) const;
+
+	Fixed operator+(const Fixed &other) const;
+	Fixed operator-(const Fixed &other) const;
+	Fixed operator*(const Fixed &other) const;
+	Fixed operator/(const Fixed &other) const;
 };
 
 std::ostream &operator<<(std::ostream &stream, const Fixed &fx);

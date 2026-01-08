@@ -57,3 +57,53 @@ std::ostream &operator<<(std::ostream &stream, const Fixed &fx) {
 	stream << fx.toFloat();
 	return stream;
 }
+
+// ex02:
+
+bool Fixed::operator>(const Fixed &other) const {
+	return (raw_bits > other.raw_bits);
+}
+
+bool Fixed::operator<(const Fixed &other) const {
+	return (raw_bits < other.raw_bits);
+}
+
+bool Fixed::operator>=(const Fixed &other) const {
+	return (raw_bits >= other.raw_bits);
+}
+
+bool Fixed::operator<=(const Fixed &other) const {
+	return (raw_bits <= other.raw_bits);
+}
+
+bool Fixed::operator==(const Fixed &other) const {
+	return (raw_bits == other.raw_bits);
+}
+
+bool Fixed::operator!=(const Fixed &other) const {
+	return (raw_bits != other.raw_bits);
+}
+
+Fixed Fixed::operator+(const Fixed &other) const {
+	Fixed result;
+	result.setRawBits(raw_bits + other.raw_bits);
+	return result;
+}
+
+Fixed Fixed::operator-(const Fixed &other) const {
+	Fixed result;
+	result.setRawBits(raw_bits - other.raw_bits);
+	return result;
+}
+
+Fixed Fixed::operator*(const Fixed &other) const {
+	Fixed result;
+	result.setRawBits((static_cast<long>(raw_bits) * other.raw_bits) >> num_fractional_bits);
+	return result;
+}
+
+Fixed Fixed::operator/(const Fixed &other) const {
+	Fixed result;
+	result.setRawBits((static_cast<long>(raw_bits) << num_fractional_bits) / other.raw_bits);
+	return result;
+}
