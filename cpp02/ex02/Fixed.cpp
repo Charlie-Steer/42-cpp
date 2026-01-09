@@ -107,3 +107,57 @@ Fixed Fixed::operator/(const Fixed &other) const {
 	result.setRawBits((static_cast<long>(raw_bits) << num_fractional_bits) / other.raw_bits);
 	return result;
 }
+
+Fixed &Fixed::operator++() {
+	raw_bits++;
+	return *this;
+}
+
+Fixed Fixed::operator++(int) {
+	Fixed temp(*this);
+	raw_bits++;
+	return temp;
+}
+
+Fixed &Fixed::operator--() {
+	raw_bits--;
+	return *this;
+}
+
+Fixed Fixed::operator--(int) {
+	Fixed temp(*this);
+	raw_bits--;
+	return temp;
+}
+
+Fixed &Fixed::min(Fixed &a, Fixed &b) {
+	if (a.raw_bits < b.raw_bits) {
+		return a;
+	} else {
+		return b;
+	}
+}
+
+const Fixed &Fixed::min(const Fixed &a, const Fixed &b) {
+	if (a.raw_bits < b.raw_bits) {
+		return a;
+	} else {
+		return b;
+	}
+}
+
+Fixed &Fixed::max(Fixed &a, Fixed &b) {
+	if (a.raw_bits > b.raw_bits) {
+		return a;
+	} else {
+		return b;
+	}
+}
+
+const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
+	if (a.raw_bits > b.raw_bits) {
+		return a;
+	} else {
+		return b;
+	}
+}
