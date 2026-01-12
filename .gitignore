@@ -7,6 +7,7 @@ sedlike
 *.replace
 harl
 fixed
+.vscode
 
 # Prerequisites
 *.d
