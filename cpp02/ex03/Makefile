@@ -1,4 +1,4 @@
-NAME = fixed
+NAME = bsp
 
 CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g
@@ -8,7 +8,9 @@ RM = rm -rf
 
 SRCS = \
 	   main.cpp \
-	   Fixed.cpp 
+	   Fixed.cpp \
+	   Point.cpp \
+	   bsp.cpp
 
 OBJS = $(SRCS:%.cpp=$(BUILD)/%.o)
 

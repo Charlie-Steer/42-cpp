@@ -3,17 +3,17 @@
 #include <iostream>
 
 Fixed::Fixed() {
-	std::cout << "Default constructor called.\n";
+	// std::cout << "Default constructor called.\n";
 	raw_bits = 0;
 }
 
 Fixed::Fixed(const Fixed &other) {
-	std::cout << "Copy constructor called.\n";
+	// std::cout << "Copy constructor called.\n";
 	*this = other;
 }
 
 Fixed &Fixed::operator=(const Fixed &other) {
-	std::cout << "Copy assignment operator called.\n";
+	// std::cout << "Copy assignment operator called.\n";
 	if (this == &other) {
 		return *this;
 	}
@@ -22,7 +22,7 @@ Fixed &Fixed::operator=(const Fixed &other) {
 }
 
 Fixed::~Fixed() {
-	std::cout << "Destructor called.\n";
+	// std::cout << "Destructor called.\n";
 }
 
 int Fixed::getRawBits(void) const {
@@ -36,12 +36,12 @@ void Fixed::setRawBits(int const raw) {
 // ex01:
 
 Fixed::Fixed(const int decimal) {
-	std::cout << "Int constructor called.\n";
+	// std::cout << "Int constructor called.\n";
 	raw_bits = decimal << num_fractional_bits;
 }
 
 Fixed::Fixed(const float value) {
-	std::cout << "Float constructor called.\n";
+	// std::cout << "Float constructor called.\n";
 	raw_bits = static_cast<int>(roundf(value * (1 << num_fractional_bits)));
 }
 
