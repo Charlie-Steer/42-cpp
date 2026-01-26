@@ -1,12 +1,20 @@
 #include "ScavTrap.hpp"
 #include <iostream>
 
-ScavTrap::ScavTrap() : ClapTrap("default_name", 100, 50, 20) {
-	std::cout << "ScavTrap default constructor called.\n";
+void ScavTrap::initializeValues(void) {
+	hit_points = 100;
+	energy_points = 50;
+	attack_damage = 20;
 }
 
-ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name, 100, 50, 20) {
-	std::cout << "ScavTrap " << name << " name constructor called.\n";
+ScavTrap::ScavTrap() : ClapTrap() {
+	std::cout << "ScavTrap default constructor called.\n";
+	initializeValues();
+}
+
+ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name) {
+	std::cout << "ScavTrap " << name << " parametric constructor called.\n";
+	initializeValues();
 }
 
 ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other) {
@@ -26,15 +34,8 @@ ScavTrap::~ScavTrap() {
 }
 
 void ScavTrap::attack(const std::string &target) {
-	if (hit_points <= 0) {
-		std::cout << "ScavTrap " << name << " can't attack because it is broken.\n";
-	} else if (energy_points <= 0) {
-		std::cout << "ScavTrap " << name << " can't attack because it has no energy.\n";
-	} else {
-		energy_points -= 1;
-		std::cout << "ScavTrap " << name << " attacks " << target << ", causing " << attack_damage
-				  << " points of damage!\n";
-	}
+	std::cout << "ScavTrap " << name << " attacks " << target << ", causing " << attack_damage
+			  << " points of damage!\n";
 }
 
 void ScavTrap::guardGate() {

@@ -9,6 +9,7 @@ class ClapTrap {
 	int hit_points;
 	int energy_points;
 	int attack_damage;
+	void print_health();
 
   public:
 	void attack(const std::string &target);

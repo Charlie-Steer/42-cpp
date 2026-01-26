@@ -1,17 +1,47 @@
 #include "ClapTrap.hpp"
 #include <iostream>
 
+int clamp_min(int value, int min) {
+	return value < min ? min : value;
+}
+
+void ClapTrap::print_health() {
+	std::cout << "ClapTrap " << name << " has " << hit_points << " hit points.\n";
+}
+
 void ClapTrap::attack(const std::string &target) {
-	std::cout << "ClapTrap " << name << " attacks " << target << ", causing " << attack_damage
-			  << " points of damage!\n";
+	if (hit_points <= 0) {
+		std::cout << "ClapTrap " << name << " can't attack because it is broken.\n";
+	} else if (energy_points <= 0) {
+		std::cout << "ClapTrap " << name << " can't attack because it has no energy.\n";
+	} else {
+		energy_points -= 1;
+		std::cout << "ClapTrap " << name << " attacks " << target << ", causing " << attack_damage
+				  << " points of damage!\n";
+	}
 }
 
 void ClapTrap::takeDamage(unsigned int amount) {
-	std::cout << "ClapTrap " << name << " takes " << amount << " points of damage!\n";
+	if (hit_points <= 0) {
+		std::cout << "ClapTrap " << name << " is already broken.\n";
+	} else {
+		std::cout << "ClapTrap " << name << " takes " << amount << " points of damage!\n";
+		hit_points = clamp_min(hit_points - static_cast<int>(amount), 0);
+		ClapTrap::print_health();
+	}
 }
 
 void ClapTrap::beRepaired(unsigned int amount) {
-	std::cout << "ClapTrap " << name << " repairs " << amount << " hit points!\n";
+	if (hit_points <= 0) {
+		std::cout << "ClapTrap " << name << " can't repair itself because it is broken.\n";
+	} else if (energy_points <= 0) {
+		std::cout << "ClapTrap " << name << " can't repair itself because it has no energy.\n";
+	} else {
+		energy_points -= 1;
+		std::cout << "ClapTrap " << name << " repairs " << amount << " hit points!\n";
+		hit_points += amount;
+		ClapTrap::print_health();
+	}
 }
 
 ClapTrap::ClapTrap() : name(), hit_points(10), energy_points(10), attack_damage(0) {

@@ -16,8 +16,12 @@ int main() {
 
 	std::cout << "\n----- Verb functions -----\n";
 	b.attack("target_dummy");
-	b.takeDamage(5);
+	b.takeDamage(6);
 	b.beRepaired(3);
+	b.takeDamage(100);
+	b.takeDamage(7);
+	b.beRepaired(3);
+	b.attack("target_dummy");
 
 	std::cout << "\n----- Self-assignment (edge case) -----\n";
 	b = b;

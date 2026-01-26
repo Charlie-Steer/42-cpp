@@ -9,8 +9,6 @@ class ClapTrap {
 	int hit_points;
 	int energy_points;
 	int attack_damage;
-	void print_health();
-	ClapTrap(const std::string &name, unsigned int hit_points, unsigned int energy_points, unsigned int attack_damage);
 
   public:
 	virtual void attack(const std::string &target);
