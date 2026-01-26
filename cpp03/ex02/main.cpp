@@ -25,6 +25,11 @@ int main(void) {
 	{
 		FragTrap ft("FR4G");
 		ft.attack("enemy");
+		ft.takeDamage(60);
+		ft.beRepaired(20);
+		ft.takeDamage(100);
+		ft.beRepaired(20);
+		ft.attack("enemy");
 		ft.highFivesGuys();
 	}
 

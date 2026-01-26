@@ -5,9 +5,6 @@
 #include <string>
 
 class FragTrap : virtual public ClapTrap {
-  private:
-	void initializeValues(void);
-
   public:
 	FragTrap(void);
 	FragTrap(const std::string &name);

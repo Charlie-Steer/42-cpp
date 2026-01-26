@@ -1,21 +1,12 @@
-#include "ClapTrap.hpp"
 #include "FragTrap.hpp"
 #include <iostream>
 
-void FragTrap::initializeValues(void) {
-	hit_points = 100;
-	energy_points = 100;
-	attack_damage = 30;
-}
-
-FragTrap::FragTrap() : ClapTrap() {
+FragTrap::FragTrap() : ClapTrap("default_name", 100, 100, 30) {
 	std::cout << "FragTrap default constructor called.\n";
-	initializeValues();
 }
 
-FragTrap::FragTrap(const std::string &name) : ClapTrap(name) {
+FragTrap::FragTrap(const std::string &name) : ClapTrap(name, 100, 100, 30) {
 	std::cout << "FragTrap " << name << " parametric constructor called.\n";
-	initializeValues();
 }
 
 FragTrap::FragTrap(const FragTrap &other) : ClapTrap(other) {
@@ -35,5 +26,9 @@ FragTrap::~FragTrap() {
 }
 
 void FragTrap::highFivesGuys() {
-	std::cout << "FragTrap " << name << " requests to perform a high five!\n";
+	if (hit_points <= 0) {
+		std::cout << "FragTrap " << name << " can't high five because it is broken.\n";
+	} else {
+		std::cout << "FragTrap " << name << " requests to perform a high five!\n";
+	}
 }

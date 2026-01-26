@@ -11,7 +11,6 @@ class ScavTrap : virtual public ClapTrap {
 	ScavTrap(const ScavTrap &other);
 	ScavTrap &operator=(const ScavTrap &other);
 	~ScavTrap();
-	void initializeValues(void);
 	void attack(const std::string &target);
 	void guardGate();
 };
