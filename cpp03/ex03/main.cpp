@@ -1,60 +1,41 @@
-#include "ClapTrap.hpp"
-#include "FragTrap.hpp"
-#include "ScavTrap.hpp"
+#include "DiamondTrap.hpp"
 #include <iostream>
 
-int main(void) {
-	std::cout << "===== ClapTrap test =====" << std::endl;
-	{
-		ClapTrap ct("CL4P");
-		ct.attack("target");
-		ct.takeDamage(3);
-		ct.beRepaired(2);
-	}
+int main() {
+	std::cout << "\n--- CONSTRUCTION TEST ---\n";
+	DiamondTrap d1("DiamondBob");
 
-	std::cout << std::endl;
-	std::cout << "===== ScavTrap test =====" << std::endl;
-	{
-		ScavTrap st("SC4V");
-		st.attack("intruder");
-		st.guardGate();
-	}
+	std::cout << "\n--- WHO AM I TEST ---\n";
+	d1.whoAmI();
 
-	std::cout << std::endl;
-	std::cout << "===== FragTrap test =====" << std::endl;
-	{
-		FragTrap ft("FR4G");
-		ft.attack("enemy");
-		ft.highFivesGuys();
-	}
+	std::cout << "\n--- ATTACK TEST (must use ScavTrap version) ---\n";
+	d1.attack("enemy");
 
-	std::cout << std::endl;
-	std::cout << "===== FragTrap copy constructor test =====" << std::endl;
-	{
-		FragTrap original("Original");
-		FragTrap copy(original);
-		copy.highFivesGuys();
-	}
+	std::cout << "\n--- ENERGY / HP CONSUMPTION TEST ---\n";
+	for (int i = 0; i < 55; i++)
+		d1.attack("dummy"); // should stop when energy hits 0
 
-	std::cout << std::endl;
-	std::cout << "===== FragTrap assignment operator test =====" << std::endl;
-	{
-		FragTrap a("Alpha");
-		FragTrap b("Beta");
+	std::cout << "\n--- REPAIR TEST ---\n";
+	d1.beRepaired(20);
 
-		b = a;
-		b.highFivesGuys();
-	}
+	std::cout << "\n--- DAMAGE TEST ---\n";
+	d1.takeDamage(200); // should break the robot
+	d1.attack("enemy"); // should fail (no HP)
 
-	std::cout << std::endl;
-	std::cout << "===== Polymorphic deletion test =====" << std::endl;
-	{
-		ClapTrap *ptr = new FragTrap("Poly");
-		delete ptr;
-	}
+	std::cout << "\n--- COPY CONSTRUCTOR TEST ---\n";
+	DiamondTrap d2(d1);
+	d2.whoAmI();
 
-	std::cout << std::endl;
-	std::cout << "===== End of tests =====" << std::endl;
+	std::cout << "\n--- ASSIGNMENT OPERATOR TEST ---\n";
+	DiamondTrap d3("Temporary");
+	d3 = d1;
+	d3.whoAmI();
 
+	std::cout << "\n--- POLYMORPHISM TEST ---\n";
+	ClapTrap *ptr = new DiamondTrap("Poly");
+	ptr->attack("target"); // should still use ScavTrap attack
+	delete ptr;
+
+	std::cout << "\n--- END OF PROGRAM (DESTRUCTION ORDER) ---\n";
 	return 0;
 }

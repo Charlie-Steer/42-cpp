@@ -6,7 +6,7 @@ FragTrap::FragTrap() : ClapTrap("default_name", 100, 100, 30) {
 }
 
 FragTrap::FragTrap(const std::string &name) : ClapTrap(name, 100, 100, 30) {
-	std::cout << "FragTrap " << name << " parametric constructor called.\n";
+	std::cout << "FragTrap " << name << " name constructor called.\n";
 }
 
 FragTrap::FragTrap(const FragTrap &other) : ClapTrap(other) {
