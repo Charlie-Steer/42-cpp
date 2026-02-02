@@ -1,7 +1,7 @@
 #ifndef CLAPTRAP_HPP
 #define CLAPTRAP_HPP
 
-#include "string"
+#include <string>
 
 class ClapTrap {
   private:
