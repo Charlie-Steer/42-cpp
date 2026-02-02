@@ -8,7 +8,7 @@ RM = rm -rf
 
 SRCS = \
 	   main.cpp \
-	   Animal.cpp \
+	   AAnimal.cpp \
 	   Dog.cpp \
 	   Cat.cpp \
 	   WrongAnimal.cpp \

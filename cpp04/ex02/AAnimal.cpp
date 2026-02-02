@@ -1,19 +1,19 @@
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include <iostream>
 
-Animal::Animal() : type("Unknown") {
+AAnimal::AAnimal() : type("Unknown") {
 	std::cout << "Animal (" << type << ") default constructor called.\n";
 }
 
-Animal::Animal(const std::string &type) : type(type) {
+AAnimal::AAnimal(const std::string &type) : type(type) {
 	std::cout << "Animal (" << type << ") type constructor called.\n";
 }
 
-Animal::Animal(const Animal &other) : type(other.type) {
+AAnimal::AAnimal(const AAnimal &other) : type(other.type) {
 	std::cout << "Animal (" << type << ") copy constructor called.\n";
 }
 
-Animal &Animal::operator=(const Animal &other) {
+AAnimal &AAnimal::operator=(const AAnimal &other) {
 	if (this == &other) {
 		return *this;
 	}
@@ -22,7 +22,7 @@ Animal &Animal::operator=(const Animal &other) {
 	return *this;
 }
 
-Animal::~Animal() {
+AAnimal::~AAnimal() {
 	std::cout << "Animal (" << type << ") destructor called.\n";
 }
 
@@ -30,6 +30,6 @@ Animal::~Animal() {
 // 	std::cout << "Animal (" << type << "): ???\n";
 // }
 
-const std::string &Animal::getType(void) const {
+const std::string &AAnimal::getType(void) const {
 	return type;
 }

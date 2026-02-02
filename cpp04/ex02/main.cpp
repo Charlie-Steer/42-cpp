@@ -1,4 +1,4 @@
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
 
@@ -9,13 +9,16 @@ int main() {
 	Cat cat;
 	cat.makeSound();
 
-	Animal *polymorphic_dog = new Dog;
+	AAnimal *polymorphic_dog = new Dog;
 	polymorphic_dog->makeSound();
 
-	Animal *polymorphic_cat = new Cat;
+	AAnimal *polymorphic_cat = new Cat;
 	polymorphic_cat->makeSound();
 
 	// These lines don't compile due to Animal being abstract.
 	// Animal animal;
 	// animal.makeSound();
+
+	delete polymorphic_cat;
+	delete polymorphic_dog;
 }
