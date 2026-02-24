@@ -1,42 +1,34 @@
 #include <iostream>
 #include "Bureaucrats.hpp"
 
-int main()
-{
+int main() {
     std::cout << "=== VALID CONSTRUCTION ===\n";
-    try
-    {
+    try {
         Bureaucrat a("Alice", 42);
         std::cout << a << std::endl;
     }
-    catch (const std::exception& e)
-    {
+    catch (const std::exception& e) {
         std::cout << "Unexpected exception: " << e.what() << std::endl;
     }
 
     std::cout << "\n=== INVALID CONSTRUCTION (TOO HIGH) ===\n";
-    try
-    {
+    try {
         Bureaucrat b("Bob", 0);
     }
-    catch (const std::exception& e)
-    {
+    catch (const std::exception& e) {
         std::cout << e.what() << std::endl;
     }
 
     std::cout << "\n=== INVALID CONSTRUCTION (TOO LOW) ===\n";
-    try
-    {
+    try {
         Bureaucrat c("Charlie", 151);
     }
-    catch (const std::exception& e)
-    {
+    catch (const std::exception& e) {
         std::cout << e.what() << std::endl;
     }
 
     std::cout << "\n=== INCREMENT TEST ===\n";
-    try
-    {
+    try {
         Bureaucrat d("Diana", 2);
         std::cout << d << std::endl;
 
@@ -45,14 +37,12 @@ int main()
 
         d.incrementGrade(); // should throw
     }
-    catch (const std::exception& e)
-    {
+    catch (const std::exception& e) {
         std::cout << "Increment exception: " << e.what() << std::endl;
     }
 
     std::cout << "\n=== DECREMENT TEST ===\n";
-    try
-    {
+    try {
         Bureaucrat e("Edward", 149);
         std::cout << e << std::endl;
 
@@ -61,27 +51,23 @@ int main()
 
         e.decrementGrade(); // should throw
     }
-    catch (const std::exception& e)
-    {
+    catch (const std::exception& e) {
         std::cout << "Decrement exception: " << e.what() << std::endl;
     }
 
     std::cout << "\n=== COPY TEST ===\n";
-    try
-    {
+    try {
         Bureaucrat original("Frank", 75);
         Bureaucrat copy(original);
         std::cout << "Original: " << original << std::endl;
         std::cout << "Copy:     " << copy << std::endl;
     }
-    catch (const std::exception& e)
-    {
+    catch (const std::exception& e) {
         std::cout << "Copy exception: " << e.what() << std::endl;
     }
 
     std::cout << "\n=== ASSIGNMENT TEST ===\n";
-    try
-    {
+    try {
         Bureaucrat g("George", 100);
         Bureaucrat h("Henry", 50);
 
@@ -95,8 +81,7 @@ int main()
         std::cout << g << std::endl;
         std::cout << h << std::endl;
     }
-    catch (const std::exception& e)
-    {
+    catch (const std::exception& e) {
         std::cout << "Assignment exception: " << e.what() << std::endl;
     }
 
