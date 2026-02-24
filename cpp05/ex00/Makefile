@@ -7,6 +7,7 @@ BUILD = build
 RM = rm -rf
 
 SRCS = \
+	   Bureaucrats.cpp \
 	   main.cpp
 
 OBJS = $(SRCS:%.cpp=$(BUILD)/%.o)
