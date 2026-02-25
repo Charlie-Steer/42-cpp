@@ -1,4 +1,5 @@
-#include "Bureaucrats.hpp"
+#include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 Bureaucrat::Bureaucrat() : name("Unnamed"), grade(150) {
     // std::cout << "Bureaucrats default constructor called." << std::endl;
@@ -22,9 +23,10 @@ Bureaucrat::Bureaucrat(const Bureaucrat& other) : name(other.name), grade(other.
 // Warning: "name" cannot be assigned to.
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {
     // std::cout << "Bureaucrats copy assignment operator called." << std::endl;
-    if (this != &other) {
-		grade = other.grade;
+    if (this == &other) {
+		return *this;
     }
+	grade = other.grade;
     return *this;
 }
 
@@ -55,15 +57,27 @@ void Bureaucrat::decrementGrade() {
 }
 
 const char *Bureaucrat::GradeTooHighException::what() const throw() {
-	return "Attempt to assign a grade too high. Valid range (1, 150). 1 is highest.";
+	return "Attempt to assign a grade too high. Valid range (1, 150). 1 is highest.\n";
 }
 
 const char *Bureaucrat::GradeTooLowException::what() const throw() {
-	return "Attempt to assign a grade too low. Valid range (1, 150). 150 is lowest.";
+	return "Attempt to assign a grade too low. Valid range (1, 150). 150 is lowest.\n";
+}
+
+
+void Bureaucrat::signForm(Form &form) const {
+	if (!form.getIsSigned()) {
+		try {
+			form.beSigned(*this);
+			std::cout << name << " signed " << form.getName() << ".\n";
+		} catch (const std::exception &e) {
+			std::cout << name << " couldn't sign " << form.getName() << " because: " << e.what() << std::endl;
+		}
+	}
 }
 
 
 std::ostream &operator<<(std::ostream &ostream, const Bureaucrat &bureaucrat) {
-	ostream << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << ".";
+	ostream << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
 	return ostream;
 }

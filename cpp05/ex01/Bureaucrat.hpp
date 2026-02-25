@@ -1,9 +1,11 @@
-#ifndef BUREAUCRATS_HPP
-#define BUREAUCRATS_HPP
+#ifndef BUREAUCRAT_HPP
+#define BUREAUCRAT_HPP
 
 #include <string>
 #include <exception>
-#include <ostream>
+#include <iostream>
+
+class AForm;
 
 class Bureaucrat {
 	private:
@@ -30,6 +32,8 @@ class Bureaucrat {
 			public:
 				const char *what() const throw();
 		};
+
+		void signForm(AForm &form) const;
 };
 
 std::ostream &operator<<(std::ostream &stream, const Bureaucrat &bureacrat);
