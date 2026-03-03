@@ -65,7 +65,7 @@ const char *Bureaucrat::GradeTooLowException::what() const throw() {
 }
 
 
-void Bureaucrat::signForm(AForm &form) const {
+void Bureaucrat::signForm(Form &form) const {
 	if (!form.getIsSigned()) {
 		try {
 			form.beSigned(*this);

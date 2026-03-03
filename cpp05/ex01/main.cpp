@@ -6,7 +6,7 @@ int main() {
     std::cout << "--- TEST 1: Basic Form Creation and Signing ---" << std::endl;
     try {
         Bureaucrat boss("The Boss", 1);
-        AForm contract("Top Secret Contract", 10, 50);
+        Form contract("Top Secret Contract", 10, 50);
         
         std::cout << contract; // Tests operator<<
         boss.signForm(contract); // Tests Bureaucrat::signForm
@@ -18,7 +18,7 @@ int main() {
     std::cout << "\n--- TEST 2: Bureaucrat Grade Too Low to Sign ---" << std::endl;
     try {
         Bureaucrat intern("Intern", 150);
-        AForm importantForm("Important Form", 1, 1);
+        Form importantForm("Important Form", 1, 1);
         
         std::cout << importantForm;
         intern.signForm(importantForm); // Should fail and print "couldn't sign because..."
@@ -29,14 +29,14 @@ int main() {
 
     std::cout << "\n--- TEST 3: Invalid Form Creation (Grade Too High) ---" << std::endl;
     try {
-        AForm illegalForm("Illegal", 0, 50);
+        Form illegalForm("Illegal", 0, 50);
     } catch (std::exception &e) {
         std::cerr << "Caught expected error: " << e.what() << std::endl;
     }
 
     std::cout << "\n--- TEST 4: Invalid Form Creation (Grade Too Low) ---" << std::endl;
     try {
-        AForm lowForm("Janitor Duties", 151, 150);
+        Form lowForm("Janitor Duties", 151, 150);
     } catch (std::exception &e) {
         std::cerr << "Caught expected error: " << e.what() << std::endl;
     }
@@ -44,7 +44,7 @@ int main() {
     std::cout << "\n--- TEST 5: Signing an Already Signed Form ---" << std::endl;
     try {
         Bureaucrat manager("Manager", 5);
-        AForm vacation("Vacation Request", 10, 10);
+        Form vacation("Vacation Request", 10, 10);
         
         manager.signForm(vacation);
         manager.signForm(vacation);
