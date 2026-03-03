@@ -68,7 +68,7 @@ const char *AForm::FormNotSignedException::what() const throw() {
 	return "Attempt to execute an unsigned form.";
 }
 
-void AForm::execute(Bureaucrat &executor) const {
+void AForm::execute(Bureaucrat const &executor) const {
 	if (!is_signed) {
 		throw FormNotSignedException();
 	}
@@ -77,9 +77,6 @@ void AForm::execute(Bureaucrat &executor) const {
 	}
 	performExecution();
 }
-
-void AForm::performExecution() const {}
-
 
 std::ostream &operator<<(std::ostream &ostream, const AForm &form) {
 	ostream << "Form " << form.getName() << " (" << form.getTarget() << ") " << " with sign_grade " << form.getSignGrade() << ", execute_grade " << form.getExecuteGrade() << " is ";

@@ -4,7 +4,6 @@
 #include <string>
 #include <exception>
 #include <iostream>
-// #include "Bureaucrat.hpp"
 
 class Bureaucrat;
 
@@ -30,7 +29,7 @@ class AForm {
 		bool getIsSigned() const;
 		std::string getTarget() const;
 
-		virtual void beSigned(const Bureaucrat &bureaucrat) = 0;
+		void beSigned(const Bureaucrat &bureaucrat);
 
 		class GradeTooHighException : public std::exception {
 			public:
@@ -47,7 +46,7 @@ class AForm {
 				const char *what() const throw();
 		};
 
-		void execute(Bureaucrat &executor) const;
+		void execute(Bureaucrat const &executor) const;
 		virtual void performExecution() const = 0;
 };
 
