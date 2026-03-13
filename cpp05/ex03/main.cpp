@@ -1,9 +1,12 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "Bureaucrat.hpp"
 #include "Intern.hpp"
 #include "AForm.hpp"
 
 int main() {
+    std::srand(std::time(NULL)); 
     Intern someRandomIntern;
     Bureaucrat boss("The Boss", 1);
     AForm* rrf = NULL;
