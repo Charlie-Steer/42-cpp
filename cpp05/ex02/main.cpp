@@ -1,5 +1,7 @@
 #include <iostream>
 #include <exception>
+#include <cstdlib>
+#include <ctime>
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
 #include "ShrubberyCreationForm.hpp"
@@ -7,6 +9,8 @@
 #include "PresidentialPardonForm.hpp"
 
 int main() {
+	std::srand(std::time(NULL));
+
     std::cout << "--- Test 1: Grade requirements and execution ---" << std::endl;
     try {
         Bureaucrat boss("The Boss", 1);

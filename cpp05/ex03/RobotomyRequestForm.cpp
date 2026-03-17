@@ -1,15 +1,10 @@
 #include "RobotomyRequestForm.hpp"
 #include <cstdlib>
-#include <ctime>
 
-RobotomyRequestForm::RobotomyRequestForm() : AForm("Robotomy Request Form", 72, 45, "") {
-	std::srand(std::time(NULL));
-}
+RobotomyRequestForm::RobotomyRequestForm() : AForm("Robotomy Request Form", 72, 45, "") {}
 
 RobotomyRequestForm::RobotomyRequestForm(std::string target)
-: AForm("Robotomy Request Form", 72, 45, target) {
-	std::srand(std::time(NULL));
-}
+: AForm("Robotomy Request Form", 72, 45, target) {}
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &other)
 : AForm(other) {}
