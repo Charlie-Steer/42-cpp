@@ -1,10 +1,8 @@
 #include "ScalarConverter.hpp"
-#include <ios>
 #include <iostream>
 #include <cstdlib>
 #include <climits>
 #include <limits>
-#include <iomanip>
 
 void print_error(const std::string &message) {
 	std::cerr << message << std::endl;
@@ -61,7 +59,7 @@ static void convert_float_literal(const std::string &input) {
 
 static void convert_double_literal(const std::string &input) {
 	char *end = NULL;
-	float d = std::strtod(input.c_str(), &end);
+	double d = std::strtod(input.c_str(), &end);
 	if (*end != '\0') {
 		print_error("Error: Double parsing error.");
 		return;
@@ -76,47 +74,31 @@ static void convert_double_literal(const std::string &input) {
 	}
 }
 
-// TODO: Use std::fixed and std::setprecision(1) to avoid malformed floating point output.
-// TODO: Use std::fixed and std::setprecision(1) to avoid malformed floating point output.
-// TODO: Use std::fixed and std::setprecision(1) to avoid malformed floating point output.
-// TODO: Use std::fixed and std::setprecision(1) to avoid malformed floating point output.
-// TODO: Use std::fixed and std::setprecision(1) to avoid malformed floating point output.
-
 static void output_results(double value) {
 	std::cout << "char: ";
-	if (isprint(static_cast<char>(value))) {
-		std::cout << "\'" << static_cast<char>(value) << "\'" << "\n";
-	} else if (value >= 0 && value <= 127) {
-		std::cout << "Non displayable.\n";
+	if (value < 0 || value > 127) {
+		std::cout << "impossible\n";
+	} else if (!isprint(static_cast<int>(value))) {
+		std::cout << "Non displayable\n";
 	} else {
-		std::cout << "impossible.\n";
+		std::cout << "\'" << static_cast<char>(value) << "\'" << "\n";
 	}
 
-	long l = static_cast<int64_t>(value);
+	long l = static_cast<long>(value);
 	std::cout << "int: ";
-	if (l < INT_MIN || l > INT_MAX) {
-		std::cout << "impossible.\n";
+	if (l < INT_MIN || l > INT_MAX || value != value) {
+		std::cout << "impossible\n";
 	} else {
 		std::cout << static_cast<int>(value) << "\n";
 	}
 
-	// TODO: How do I want to handle large float printing so it is not poorly formatted?
-	// TODO: How do I want to handle large float printing so it is not poorly formatted?
-	// TODO: How do I want to handle large float printing so it is not poorly formatted?
-	// TODO: How do I want to handle large float printing so it is not poorly formatted?
-	// TODO: How do I want to handle large float printing so it is not poorly formatted?
-	// TODO: How do I want to handle large float printing so it is not poorly formatted?
-	// TODO: How do I want to handle large float printing so it is not poorly formatted?
-	std::cout << std::fixed << std::setprecision(1);
-	if (value - static_cast<double>(l) == 0.0) {
+	if (value > 1000000.0 || value < -1000000.0) {
+		std::cout << "float: " << value << "f\ndouble: " << static_cast<double>(value) << "\n";
+	} else if (value == static_cast<double>(l)) {
 		std::cout << "float: " << value << ".0f\ndouble: " << static_cast<double>(value) << ".0\n";
 	} else {
 		std::cout << "float: " << value << "f\ndouble: " << static_cast<double>(value) << "\n";
 	}
-	// std::cout << "float: " << value << "f\ndouble: " << static_cast<double>(value) << "\n";
-
-	std::cout.unsetf(std::ios_base::fixed);
-	std::cout.precision(6);
 }
 
 static void convert_char(const std::string &input) {
@@ -131,11 +113,6 @@ static void convert_int(const std::string &input) {
 		print_error("Error: Integer parsing error.");
 		return;
 	}
-
-	// if (l < INT_MIN || l > INT_MAX) {
-	// 	print_error("Error: Integer overflow.");
-	// }
-	// int i = static_cast<int>(l);
 
 	output_results(static_cast<double>(l));
 }
@@ -162,8 +139,6 @@ static void convert_double(const std::string &input) {
 	output_results(value);
 }
 
-// TODO: Orthodox Cannonical Form.
-
 void ScalarConverter::convert(const std::string &input) {
 	if (input.empty()) {
 		std::cerr << "Error: Bad input.";
@@ -185,4 +160,17 @@ void ScalarConverter::convert(const std::string &input) {
 	} else {
 		convert_int(input);
 	}
+}
+
+ScalarConverter::ScalarConverter() {}
+
+ScalarConverter::ScalarConverter(const ScalarConverter &other) {
+    (void)other;
+}
+
+ScalarConverter::~ScalarConverter() {}
+
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other) {
+    (void)other;
+    return *this;
 }
