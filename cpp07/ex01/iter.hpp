@@ -5,7 +5,7 @@
 #include <iostream>
 
 template <typename T, typename F>
-void iter(T *array, size_t length, F function) {
+void iter(T *array, const size_t length, F function) {
 	if (!array || !function) {
 		return;
 	}
@@ -16,7 +16,7 @@ void iter(T *array, size_t length, F function) {
 
 // A simple function to print an element
 template <typename T>
-void printElement(T &item) {
+void printElement(const T &item) {
     std::cout << item << " ";
 }
 

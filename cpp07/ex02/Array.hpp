@@ -11,9 +11,9 @@ class Array {
 		unsigned int length;
 	public:
 		Array();
-		Array(unsigned int n); // NOTE: Initialize to 0.
+		Array(unsigned int n);
 		Array(const Array &other);
-		Array &operator=(const Array &other); // NOTE: Hard copy.
+		Array &operator=(const Array &other);
 		~Array();
 
 		T &operator[](unsigned int index);
