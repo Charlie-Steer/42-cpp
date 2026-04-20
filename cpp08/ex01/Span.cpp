@@ -1,5 +1,6 @@
 #include "Span.hpp"
 #include <algorithm>
+#include <numeric>
 
 Span::Span() : length(0) {}
 
@@ -42,13 +43,7 @@ long Span::shortestSpan() const {
 	std::vector<int> tmp = data;
 	std::sort(tmp.begin(), tmp.end());
 
-	long min_diff = -1;
-	for (size_t i = 0; i < tmp.size() - 1; ++i) {
-		long diff = static_cast<long>(tmp[i + 1]) - static_cast<long>(tmp[i]);
-		if (min_diff == -1 || diff < min_diff) {
-			min_diff = diff;
-		}
-	}
-
-	return min_diff;
+	std::vector<long> diffs(tmp.size());
+	std::adjacent_difference(tmp.begin(), tmp.end(), diffs.begin());
+	return *std::min_element(diffs.begin() + 1, diffs.end());
 }

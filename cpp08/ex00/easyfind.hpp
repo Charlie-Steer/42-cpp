@@ -2,6 +2,7 @@
 #define EASYFIND_HPP
 
 #include <exception>
+#include <algorithm>
 
 class ValueNotFoundException : public std::exception {
 	public:
@@ -12,13 +13,20 @@ class ValueNotFoundException : public std::exception {
 
 template <typename T>
 typename T::iterator easyfind(T &container, int value) {
-	for (typename T::iterator iterator = container.begin(); iterator != container.end(); ++iterator) {
-		if (*iterator == value) {
-			return iterator;
-		}
+	typename T::iterator iterator = std::find(container.begin(), container.end(), value);
+	if (iterator == container.end()) {
+		throw ValueNotFoundException();
 	}
+	return iterator;
+}
 
-	throw ValueNotFoundException();
+template <typename T>
+typename T::const_iterator easyfind(const T &container, int value) {
+	typename T::const_iterator iterator = std::find(container.begin(), container.end(), value);
+	if (iterator == container.end()) {
+		throw ValueNotFoundException();
+	}
+	return iterator;
 }
 
 #endif
