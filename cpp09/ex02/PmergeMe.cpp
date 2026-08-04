@@ -55,14 +55,10 @@ void PmergeMe::print_vector(std::vector<int> const& v) {
 }
 
 void PmergeMe::sort_vector(void) {
-	// Copy vector.
 	std::vector<int> v = this->_vector;
-	// Not useful at first. Only recursively.
 	std::vector<int> indexes;
 
-	// Recursively sort copy.
 	PmergeMe::_recursively_sort_vector(v, indexes);
-	// Replace original.
 	this->_vector = v;
 
 	return;
@@ -77,34 +73,32 @@ void PmergeMe::_recursively_sort_vector(std::vector<int>& v, std::vector<int>& i
 		return;
 	}
 
-	/* 	Virtually split into two equal-length segments (odd element unused if any)
-		Virtually pair i-th element of each segment and make comparison
-		Swap to have elements in first segment >= corresponding elements in second segment */
-	
-	std::vector<int>::iterator	it1 = v.begin(); // Points to beginning of first segment.
-	std::vector<int>::iterator	it2 = it1 + v.size() / 2; // Points to beginning of second segment.
-	std::vector<int>::iterator	itInd1; // Same for index sequence.
-	std::vector<int>::iterator	itInd2;
+	// Splits into two halves that get paired together, tracked by the indexes.
+	std::vector<int>::iterator	it1 = v.begin();
+	std::vector<int>::iterator	it2 = it1 + v.size() / 2;
+	std::vector<int>::iterator	it_index1;
+	std::vector<int>::iterator	it_index2;
 	if (!is_first_call) {
-		itInd1 = indexes.begin(); // Same for index sequence.
-		itInd2 = itInd1 + v.size() / 2;
+		it_index1 = indexes.begin();
+		it_index2 = it_index1 + v.size() / 2;
 	}
 	
 	for (unsigned long j = 0; j < v.size() / 2; ++j) {
 		if (*it2 > *it1) {
 			std::iter_swap(it1, it2);
-			if (!is_first_call)
-				std::iter_swap(itInd1, itInd2);
+			if (!is_first_call) {
+				std::iter_swap(it_index1, it_index2);
+			}
 		}
 		++it1;
 		++it2;
 		if (!is_first_call) {
-			++itInd1;
-			++itInd2;
+			++it_index1;
+			++it_index2;
 		}
 	}
 	
-	// Split main and pending parts for both vec and Indexes
+	// Split main and pending parts.
 	std::vector<int> vector_main(v.begin(), v.begin() + v.size() / 2);
 	std::vector<int> vector_pending(v.begin() + v.size() / 2, v.end());
 	std::vector<int> index_main;
@@ -155,30 +149,30 @@ void PmergeMe::_rearrange_vector(std::vector<int>& v, std::vector<int>& indexes)
 	return;
 }
 
-// Binary insert with jacobsthal sequence
+// Binary insert with jacobsthal sequence.
 void PmergeMe::_binary_search_insert_vector(std::vector<int>& vector_main, std::vector<int>& vector_pending, std::vector<int>& index_main, std::vector<int>& index_pending) {
 	bool is_first_call = index_main.empty();
 
-	std::vector<unsigned long>	jacobstal_sequence;
-	std::vector<long>			max_chain_size; // to insert into
-	unsigned long				previous_jacobstal = 1;
-	long						insert_size; // size of chain to insert into
-	std::vector<int>::iterator	it; // position before which to insert
+	std::vector<unsigned long>	jacobsthal_sequence;
+	std::vector<long>			max_chain_size;
+	unsigned long				previous_jacobsthal = 1;
+	long						insert_size;
+	std::vector<int>::iterator	it;
 	
-	jacobstal_sequence.push_back(1);
+	jacobsthal_sequence.push_back(1);
 	max_chain_size.push_back(1);
-	// Generate needed Jacobsthal sequence and maxChainSize
-	while (jacobstal_sequence.back() < vector_pending.size())
+
+	while (jacobsthal_sequence.back() < vector_pending.size())
 	{
-		jacobstal_sequence.push_back(jacobstal_sequence.back() + 2 * previous_jacobstal);
-		previous_jacobstal = *(jacobstal_sequence.end() - 2);
+		jacobsthal_sequence.push_back(jacobsthal_sequence.back() + 2 * previous_jacobsthal);
+		previous_jacobsthal = *(jacobsthal_sequence.end() - 2);
 		max_chain_size.push_back((max_chain_size.back() + 1) * 2 - 1); //2^n - 1
 	}
 
-	for (unsigned long j = 0; j < jacobstal_sequence.size(); j++)
+	for (unsigned long j = 0; j < jacobsthal_sequence.size(); j++)
 	{
-		previous_jacobstal = (jacobstal_sequence[j] == 1) ? 0 : jacobstal_sequence[j - 1];
-		for (unsigned long i = jacobstal_sequence[j]; i > previous_jacobstal; i--) {
+		previous_jacobsthal = (jacobsthal_sequence[j] == 1) ? 0 : jacobsthal_sequence[j - 1];
+		for (unsigned long i = jacobsthal_sequence[j]; i > previous_jacobsthal; i--) {
 			if (i > vector_pending.size()) {
 				continue;
 			}
@@ -188,12 +182,9 @@ void PmergeMe::_binary_search_insert_vector(std::vector<int>& vector_main, std::
 				std::cout << "\nInserting pend element " <<  vector_pending[i - 1] << " into sub main chain of length " << insert_size << ":" << std::endl;
 			}
 			
-			// First insert needs no comparison.
 			if (i == 1) {
 				it = vector_main.begin();	
 			} else {
-				// lower_bound performs binary search. 
-				// need second iterator to pass bound.
 				it = std::lower_bound(vector_main.begin(), vector_main.begin() + insert_size, vector_pending[i - 1]);
 			}
 
@@ -252,11 +243,11 @@ void PmergeMe::print_deque(std::deque<int> const& d) {
 }
 
 void PmergeMe::sort_deque(void) {
-	std::deque<int> d = this->_deque; // create copy
-	std::deque<int> indexes; // not useful in 1st call but needed in recurrence 
+	std::deque<int> d = this->_deque;
+	std::deque<int> indexes;
 
-	PmergeMe::_recursively_sort_vector(d, indexes); // recursively sort copy
-	this->_deque = d; // replace original
+	PmergeMe::_recursively_sort_vector(d, indexes);
+	this->_deque = d;
 	return;
 }
 
@@ -267,16 +258,14 @@ void PmergeMe::_recursively_sort_vector(std::deque<int>& d, std::deque<int>& ind
 		return;
 	}
 
-	/* 	Virtually split into two equal-length segments (odd element unused if any)
-		Virtually pair i-th element of each segment and make comparison
-		Swap to have elements in first segment >= corresponding elements in second segment */
+	// Splits into two halves of pairs, tracked by indexes.
 	
-	std::deque<int>::iterator it1 = d.begin(); // Points to beginning of first segment.
-	std::deque<int>::iterator it2 = it1 + d.size() / 2; // Point to beginning of second segment.
-	std::deque<int>::iterator itInd1; // Same for index sequence.
+	std::deque<int>::iterator it1 = d.begin();
+	std::deque<int>::iterator it2 = it1 + d.size() / 2;
+	std::deque<int>::iterator itInd1;
 	std::deque<int>::iterator itInd2;
 	if (!is_first_call) {
-		itInd1 = indexes.begin(); // Same for index sequence.
+		itInd1 = indexes.begin();
 		itInd2 = itInd1 + d.size() / 2;
 	}
 	
@@ -343,19 +332,19 @@ void PmergeMe::_rearrange_deque(std::deque<int>& deque, std::deque<int>& indexes
 	return;
 }
 
-// Binary insert with jacobsthal sequence
+// Binary insert with jacobsthal sequence.
 void PmergeMe::_binary_search_insert_deque(std::deque<int>& deque_main, std::deque<int>& deque_pending, std::deque<int>& index_main, std::deque<int>& index_pending) {
 	bool is_first_call = index_main.empty();
 
 	std::deque<unsigned long>	jacobsthal_sequence;
-	std::deque<long>			max_chain_size; // To insert into.
+	std::deque<long>			max_chain_size;
 	unsigned long				previous_jacobsthal = 1;
-	long						insert_size; // Size of chain to insert into.
-	std::deque<int>::iterator	it; // Position before which to insert.
+	long						insert_size;
+	std::deque<int>::iterator	it;
 	
 	jacobsthal_sequence.push_back(1);
 	max_chain_size.push_back(1);
-	// Generate needed Jacobsthal sequence and maxChainSize.
+	// Generate Jacobsthal sequence and maxChainSize.
 	while (jacobsthal_sequence.back() < deque_pending.size()) {
 		jacobsthal_sequence.push_back(jacobsthal_sequence.back() + 2 * previous_jacobsthal);
 		previous_jacobsthal = *(jacobsthal_sequence.end() - 2);
@@ -374,13 +363,10 @@ void PmergeMe::_binary_search_insert_deque(std::deque<int>& deque_main, std::deq
 				std::cout << "\nInserting pend element " <<  deque_pending[i - 1] << " into sub main chain of length " << insert_size << ":" << std::endl;
 			}
 			
-			// Very first insert need no comparison
 			if (i == 1) {
 				it = deque_main.begin();	
 			}
 			else {
-				// Lower_bound performs binary search
-				// need 2nd it to pass bound
 				it = std::lower_bound(deque_main.begin(), deque_main.begin() + insert_size, deque_pending[i - 1]);
 			}
 
